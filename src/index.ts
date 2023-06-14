@@ -25,22 +25,24 @@ nextButton.addEventListener('click', handleNextButtonClick)
 nextButton.addEventListener('touchstart', handleNextButtonClick)
 submitButton.addEventListener('click', handleSubmitButtonClick)
 submitButton.addEventListener('touchstart', handleSubmitButtonClick)
+prevButton.addEventListener('click', handlePreviousButtonClick)
+prevButton.addEventListener('touchstart', handlePreviousButtonClick)
 
 function handleNextButtonClick(event: Event) {
-        event.preventDefault()
-        count += 1;
+    event.preventDefault()
+    count += 1;
+    console.log(count)
 
-        // Get the form inputs
-        const salaryInput = document.getElementById("annual-salary") as HTMLInputElement
-        const employeesInput = document.getElementById("number-of-employees") as HTMLInputElement
-        const timeInput = document.getElementById("time-spent") as HTMLInputElement
+    updateNavigationButtons()
 
-        if (count > 0) prevButton.style.display = "flex"
-        if (count == 3) nextButton.style.display = "none"
+    // Get the form inputs
+    const salaryInput = document.getElementById("annual-salary") as HTMLInputElement
+    const employeesInput = document.getElementById("number-of-employees") as HTMLInputElement
+    const timeInput = document.getElementById("time-spent") as HTMLInputElement
 
-        // Update the variable values
-        annualSalary = parseFloat(salaryInput.value);
-        numberOfEmployees = parseFloat(employeesInput.value);
+    // Update the variable values
+    annualSalary = parseFloat(salaryInput.value);
+    numberOfEmployees = parseFloat(employeesInput.value);
     }
 }
 
@@ -58,6 +60,13 @@ function handleSubmitButtonClick(event: Event) {
     calculateDaysSaved();
 
     updateResults()
+}
+
+function handlePreviousButtonClick(event: Event) {
+    event.preventDefault()
+    count -= 1
+    console.log(count)
+    updateNavigationButtons()
 }
 
 function updateResults() {
@@ -88,6 +97,19 @@ function calculateMoneySaved() {
 
 function calculateDaysSaved() {
     if (timeSpentOnProductChanges && numberOfEmployees) daysSaved = (timeSpentOnProductChanges * numberOfEmployees) * 0.3
+}
+
+function updateNavigationButtons() {
+    if (count == 0) {
+        prevButton.style.display = "none";
+        nextButton.style.display = "flex";
+      } else if (count === 3) {
+        prevButton.style.display = "flex";
+        nextButton.style.display = "none";
+      } else {
+        prevButton.style.display = "flex";
+        nextButton.style.display = "flex";
+      }
 }
 
 document.addEventListener("DOMContentLoaded", init)
