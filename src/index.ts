@@ -1,23 +1,18 @@
-import gsap from 'gsap';
+import { calculateMoneySaved} from './calculator'
+
 
 // Variables
-let annualSalary: number | undefined;
+let averageAnnualSalary: number = 137000;
 let numberOfEmployees: number | undefined;
-let moneySpentAnnually: number | undefined;
-let timeSpentOnProductChanges: number | undefined;
-let productionTime: number | undefined;
-let productChangeCost: number | undefined;
 let moneySaved: number | undefined;
-let daysSaved: number | undefined;
+let timeSavedPercentage: number = 0.24;
 let count = 0;
 
 // Get references to form elements and buttons
 const form = document.getElementById("roi-calculator") as HTMLFormElement;
 const nextButton = document.getElementById("next") as HTMLDivElement;
 const prevButton = document.getElementById("previous") as HTMLDivElement;
-const submitButton = document.getElementById("submit") as HTMLDivElement;
-const formWrapper = document.getElementById("roi-form") as HTMLDivElement;
-const results = document.getElementById("roi-results") as HTMLDivElement;
+const submitButton = document.getElementById("submit") as HTMLInputElement;
 
 const init = () => {
     
@@ -32,35 +27,25 @@ const init = () => {
     function handleNextButtonClick(event: Event) {
         event.preventDefault()
         count += 1;
-        console.log(count)
 
         updateNavigationButtons()
 
         // Get the form inputs
-        const salaryInput = document.getElementById("annual-salary") as HTMLInputElement
         const employeesInput = document.getElementById("number-of-employees") as HTMLInputElement
-        const timeInput = document.getElementById("time-spent") as HTMLInputElement
 
         // Update the variable values
-        annualSalary = parseFloat(salaryInput.value);
         numberOfEmployees = parseFloat(employeesInput.value);
         }
     }
 
     function handleSubmitButtonClick(event: Event) {
-        event.preventDefault()
-
-        const timeInput = document.getElementById("time-spent") as HTMLInputElement
-        timeSpentOnProductChanges = parseFloat(timeInput.value);
+        const formData = getFormData(form, moneySaved)
+        console.log(formData)
 
         // Calculate the values
-        calculateMoneySpentAnnually();
-        calculateProductionTime();
-        caclulateProductChangeCost();
-        calculateMoneySaved();
-        calculateDaysSaved();
-
-        updateResults()
+        if (numberOfEmployees) moneySaved = calculateMoneySaved(timeSavedPercentage, numberOfEmployees, averageAnnualSalary);
+        console.log(moneySaved)
+        if (moneySaved) updateResults(moneySaved)
     }
 
     function handlePreviousButtonClick(event: Event) {
@@ -70,34 +55,10 @@ const init = () => {
         updateNavigationButtons()
     }
 
-    function updateResults() {
-        const productChangeCostElement = document.getElementById("product-change-cost") as HTMLElement;
+    function updateResults(moneySaved: number) {
         const moneySavedElement = document.getElementById("money-saved") as HTMLElement;
-        const daysSavedElement = document.getElementById("days-saved") as HTMLElement;
 
-        productChangeCostElement.textContent = productChangeCost?.toLocaleString() || "";
-        moneySavedElement.textContent = moneySaved?.toLocaleString() || "";
-        daysSavedElement.textContent = daysSaved?.toLocaleString() || "";
-    }
-
-    function calculateMoneySpentAnnually() {
-        if (annualSalary && numberOfEmployees) moneySpentAnnually = annualSalary * numberOfEmployees
-    }
-
-    function calculateProductionTime() {
-        if (timeSpentOnProductChanges && numberOfEmployees) productionTime = timeSpentOnProductChanges / (5 * numberOfEmployees)
-    }
-
-    function caclulateProductChangeCost() {
-        if (moneySpentAnnually && productionTime) productChangeCost = moneySpentAnnually * productionTime
-    }
-
-    function calculateMoneySaved() {
-        if (productChangeCost) moneySaved = productChangeCost * 0.3
-    }
-
-    function calculateDaysSaved() {
-        if (timeSpentOnProductChanges && numberOfEmployees) daysSaved = (timeSpentOnProductChanges * numberOfEmployees) * 0.3
+        moneySavedElement.textContent = moneySaved.toLocaleString() || "";
     }
 
     function updateNavigationButtons() {
@@ -113,4 +74,15 @@ const init = () => {
         }
 }
 
+export function getFormData(form: HTMLFormElement, defaultData: any) {
+    const input = document.getElementById("number-of-employees") as HTMLInputElement;
+
+    if (input) {
+        const value = parseFloat(input.value);
+        return isNaN(value) ? null : value;
+      }
+
+    return null
+  }
+  
 document.addEventListener("DOMContentLoaded", init)
