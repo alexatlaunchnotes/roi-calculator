@@ -32,7 +32,6 @@ const init = () => {
 
         // Get the form inputs
         const employeesInput = document.getElementById("number-of-employees") as HTMLInputElement
-
         // Update the variable values
         numberOfEmployees = parseFloat(employeesInput.value);
         }
@@ -40,11 +39,9 @@ const init = () => {
 
     function handleSubmitButtonClick(event: Event) {
         const formData = getFormData(form, moneySaved)
-        console.log(formData)
 
         // Calculate the values
         if (numberOfEmployees) moneySaved = calculateMoneySaved(timeSavedPercentage, numberOfEmployees, averageAnnualSalary);
-        console.log(moneySaved)
         if (moneySaved) updateResults(moneySaved)
     }
 
@@ -57,7 +54,6 @@ const init = () => {
 
     function updateResults(moneySaved: number) {
         const moneySavedElement = document.getElementById("money-saved") as HTMLElement;
-
         moneySavedElement.textContent = moneySaved.toLocaleString() || "";
     }
 
