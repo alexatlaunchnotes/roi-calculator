@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/calculator.ts"],
+  "sourcesContent": ["export function calculateMoneySaved(timeSavedPercentage: number, numberOfEmployees: number, averageAnnualSalary: number) {\n    const totalAnnualSalary = numberOfEmployees * averageAnnualSalary\n    const moneySaved = timeSavedPercentage * totalAnnualSalary\n    return moneySaved\n}\n"],
+  "mappings": "MAAO,SAASA,EAAoBC,EAA6BC,EAA2BC,EAA6B,CACrH,IAAMC,EAAoBF,EAAoBC,EAE9C,OADmBF,EAAsBG,CAE7C",
+  "names": ["calculateMoneySaved", "timeSavedPercentage", "numberOfEmployees", "averageAnnualSalary", "totalAnnualSalary"]
+}
