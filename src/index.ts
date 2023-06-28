@@ -44,14 +44,12 @@ const init = () => {
         // Calculate the values
         if (numberOfEmployees) moneySaved = calculateMoneySaved(timeSavedPercentage, numberOfEmployees, averageAnnualSalary);
         moneySavedInput.setAttribute("value", `${moneySaved}`);
-        console.log(moneySavedInput)
         if (moneySaved) updateResults(moneySaved)
     }
 
     function handlePreviousButtonClick(event: Event) {
         event.preventDefault()
         count -= 1
-        console.log(count)
         updateNavigationButtons()
     }
 
