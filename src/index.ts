@@ -14,6 +14,7 @@ const nextButton = document.getElementById("next") as HTMLDivElement;
 const prevButton = document.getElementById("previous") as HTMLDivElement;
 const submitButton = document.getElementById("submit") as HTMLInputElement;
 const moneySavedInput = document.getElementById("money-saved-input") as HTMLInputElement;
+const container = document.getElementById("roi-calculator_container") as HTMLDivElement;
 
 const init = () => {
     
@@ -41,6 +42,7 @@ const init = () => {
     function handleSubmitButtonClick(event: Event) {
         const formData = getFormData(form, moneySaved)
 
+        container.classList.add('submitted');
         // Calculate the values
         if (numberOfEmployees) moneySaved = calculateMoneySaved(timeSavedPercentage, numberOfEmployees, averageAnnualSalary);
         moneySavedInput.setAttribute("value", `${moneySaved}`);
